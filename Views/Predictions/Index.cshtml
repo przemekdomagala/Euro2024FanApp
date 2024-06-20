@@ -1,0 +1,174 @@
+﻿@model IEnumerable<Euro2024REST.Models.Predictions>
+
+@{
+    ViewData["Title"] = "Matches";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .matches-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: left;
+    }
+
+    .matches-table th, .matches-table td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+    }
+
+    .matches-table th {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .matches-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .matches-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .text-center {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+        margin-bottom: 40px;
+    }
+
+    .phase-group {
+        margin-bottom: 40px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .phase-group h3 {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border-radius: 4px 4px 0 0;
+        margin: -20px -20px 20px -20px;
+    }
+
+    .sortable {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .sortable li {
+        margin: 2px 0;
+        padding: 5px 10px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        background-color: #ffffff;
+        border-radius: 4px;
+        cursor: move;
+        display: flex;
+        align-items: center;
+    }
+
+    .sortable li span {
+        margin-right: 10px;
+        color: #6c757d;
+    }
+
+    .ui-state-default {
+        background-color: #f8f9fa;
+    }
+
+    .ui-state-hover {
+        background-color: #e2e6ea;
+    }
+
+    .update-button-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .update-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .update-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $(".sortable").sortable().disableSelection();
+
+            $("#update-button").click(function () {
+                var formData = [];
+                $(".sortable").each(function () {
+                    var phase = $(this).data('phase');
+                    $(this).children('li').each(function (index) {
+                        formData.push({
+                            team: $(this).text().trim(),
+                            phase: phase,
+                            place: index + 1
+                        });
+                    });
+                });
+                $("#sortedData").val(JSON.stringify(formData));
+                $("#updateForm").submit();
+            });
+        });
+    </script>
+}
+
+<div class="text-center">
+    <h1>@ViewData["Title"]</h1>
+    @if (ViewData["predictions"] != null)
+    {
+        var predictions = ViewData["predictions"] as List<Euro2024REST.Models.Predictions>;
+        <div class="table-container">
+            <h2>Predictions</h2>
+            <form id="updateForm" method="post" action="/Predictions/UpdateOrder">
+                @foreach (var phaseGroup in predictions.GroupBy(p => p.Phase))
+                {
+                    <div class="phase-group">
+                        <h3>@phaseGroup.Key</h3>
+                        <ul class="sortable" data-phase="@phaseGroup.Key">
+                            @foreach (var prediction in phaseGroup.OrderBy(p => p.Place))
+                            {
+                                <li id="@prediction.Id" class="ui-state-default">
+                                    <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>@prediction.Team
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+                <input type="hidden" id="sortedData" name="sortedData" />
+                <div class="update-button-container">
+                    <button type="button" id="update-button" class="update-button">Update Predictions</button>
+                </div>
+            </form>
+        </div>
+    }
+</div>

@@ -1,0 +1,17 @@
+﻿body.main-navbar{
+    background-color: #ffc107;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+body.test{
+    background-color: #ffc107;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #333;
+}

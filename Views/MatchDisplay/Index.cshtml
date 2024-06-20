@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Matches";
+}
+
+<style>
+    .matches-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: left;
+    }
+
+    .matches-table th, .matches-table td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+    }
+
+    .matches-table th {
+        background-color: #f2f2f2;
+    }
+
+    .matches-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .matches-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .text-center {
+        text-align: center;
+        font-family: Arial, sans-serif;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+</style>
+
+<div class="text-center">
+    @if (ViewData["matchesDisplay"] != null)
+    {
+        var matches = ViewData["matchesDisplay"] as List<Match>;
+        <div class="table-container">
+            <h2>Group Matches</h2>
+            @foreach (var group in new[] { "A", "B", "C", "D", "E", "F" })
+            {
+                var groupMatches = matches.Where(m => m.Team1 != "TBD" && m.Phase.Contains($"Group {group}"));
+                if (groupMatches.Any())
+                {
+                    <h3>Group @group</h3>
+                    <table class="matches-table">
+                        <tr>
+                            <th>Team1</th>
+                            <th>Score</th>
+                            <th>Team2</th>
+                            <th>Date</th>
+                            <th>Venue</th>
+                        </tr>
+                        @foreach (var match in groupMatches)
+                        {
+                            <tr>
+                                <td>@match.Team1</td>
+                                <td>@match.Score1 - @match.Score2</td>
+                                <td>@match.Team2</td>
+                                <td>@match.Date</td>
+                                <td>@match.Venue</td>
+                            </tr>
+                        }
+                    </table>
+                }
+            }
+        </div>
+        <div class="table-container">
+            <h2>Playoff Matches</h2>
+            @foreach (var phase in new[] { "Round of 16", "Quarter-Final", "Semi-Final", "Grand Final" })
+            {
+                var playoffMatches = matches.Where(m => m.Team1 == "TBD" && m.Team2 == "TBD" && m.Phase.Contains(phase));
+                if (playoffMatches.Any())
+                {
+                    <h3>@phase</h3>
+                    <table class="matches-table">
+                        <tr>
+                            <th>Team1</th>
+                            <th>Score</th>
+                            <th>Team2</th>
+                            <th>Date</th>
+                            <th>Venue</th>
+                        </tr>
+                        @foreach (var match in playoffMatches)
+                        {
+                            <tr>
+                                <td>@match.Team1</td>
+                                <td>@match.Score1 - @match.Score2</td>
+                                <td>@match.Team2</td>
+                                <td>@match.Date</td>
+                                <td>@match.Venue</td>
+                            </tr>
+                        }
+                    </table>
+                }
+            }
+        </div>
+    }
+</div>

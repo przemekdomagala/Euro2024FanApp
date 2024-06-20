@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://purecss.io/pure-min.css">
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            font-family: "Roboto Light", sans-serif;
+        }
+        .form-box {
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .form-box input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+        .form-box input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+        .form-box input[type="submit"] {
+            width: 40%;
+            padding: 10px;
+            margin: 10px 1%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-box .red {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-box">
+        <h1 class="display-4">Sign in</h1>
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+        <input type="text" placeholder="Login" id="username" name="username" /> <br />
+        <input type="password" placeholder="Password" id="password" name="password"/> <br />
+        <input type="submit" class="pure-button pure-button-primary" name="action" value="Log in" />
+        <input type="submit" class="pure-button pure-button-primary" name="action" value="Register" />
+        }
+        @if (ViewData["Error"] != null)
+        {
+        <div class="red">
+            <p><strong>INVALID CREDENTIALS</strong></p>
+        </div>
+        }
+        @if (ViewData["Error2"] != null)
+        {
+        <div class="red">
+            <p><strong>INVALID CREDENTIALS</strong></p>
+        </div>
+        }
+    </div>
+</div>
+</body>

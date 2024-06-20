@@ -1,0 +1,168 @@
+﻿@using System.Drawing.Printing
+@{
+ViewData["Title"] = "Teams";
+}
+
+<div class="text-center">
+    @if (ViewData["teamsDisplay"] != null)
+    {
+    var teams = ViewData["teamsDisplay"] as List<Team>;
+    <div class="table-container">
+        <table class="matches-table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Rating</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var team in teams){
+                @if(@team.Name=="TBD"){continue;}
+            <tr>
+                <td>
+                    <a href="javascript:void(0);" class="team-name" onclick="togglePlayers('@team.Name', this)">@team.Name</a>
+                    <div id="@team.Name" class="player-list" style="display: none;">
+                        @if (ViewData["playersDisplay"] != null) {
+                        var players = ViewData["playersDisplay"] as List<Player>;
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Actions</th>
+                            </tr>
+                            @foreach(var player in players)
+                            {
+                            if (@player.Team == @team.Name)
+                            {
+                            <tr>
+                                <td>@player.Name</td>
+                                <td>@player.Position</td>
+                                <td>
+                                    <button class="more-info-btn" onclick="togglePlayerInfo(this, '@player.Age', '@player.Height', '@player.MarketValue', '@player.Club')">More Info</button>
+                                </td>
+                            </tr>
+                            <tr class="player-details" style="display: none;">
+                                <td colspan="3">
+                                    <div class="details-content"></div>
+                                </td>
+                            </tr>
+                            }
+                            }
+                        </table>
+                        }
+                    </div>
+                </td>
+                <td class="rating-cell">@team.Rating</td>
+            </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    }
+</div>
+
+<style>
+    .table-container {
+        margin: 20px auto;
+        width: 80%;
+        overflow-x: auto;
+    }
+
+    .matches-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+
+    .matches-table th, .matches-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .matches-table th {
+        background-color: #333;
+        color: white;
+    }
+
+    .matches-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .matches-table tr:hover {
+        background-color: #ddd;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .team-name {
+        color: #0066cc;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .team-name:hover {
+        text-decoration: underline;
+    }
+
+    .player-list {
+        margin-top: 10px;
+        padding-left: 0;
+    }
+
+    .more-info-btn {
+        padding: 5px 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .more-info-btn:hover {
+        background-color: #45a049;
+    }
+
+    .player-details {
+        display: none;
+    }
+
+    .details-content {
+        padding: 10px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+    }
+</style>
+
+<script>
+    function togglePlayers(teamName, link) {
+        var playerList = document.getElementById(teamName);
+        var ratingCell = link.closest('tr').querySelector('.rating-cell');
+
+        if (playerList.style.display === "none") {
+            playerList.style.display = "block";
+            ratingCell.style.display = "none";
+        } else {
+            playerList.style.display = "none";
+            ratingCell.style.display = "table-cell";
+        }
+    }
+
+    function togglePlayerInfo(button, age, height, marketValue, club) {
+        var playerDetailsRow = button.closest('tr').nextElementSibling;
+        var detailsContent = playerDetailsRow.querySelector('.details-content');
+
+        if (playerDetailsRow.style.display === "none") {
+            detailsContent.innerHTML = `
+                <p><strong>Age:</strong> ${age}</p>
+                <p><strong>Height:</strong> ${height} cm</p>
+                <p><strong>Market Value:</strong> ${marketValue} €</p>
+                <p><strong>Club:</strong> ${club}</p>
+            `;
+            playerDetailsRow.style.display = "table-row";
+        } else {
+            playerDetailsRow.style.display = "none";
+        }
+    }
+</script>

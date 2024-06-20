@@ -1,0 +1,15 @@
+@Euro2024REST_Host_Address = http://localhost:5280
+
+PUT  {{Euro2024REST_Host_Address}}/api/Team/Germany
+Content-Type: application/json
+Accept: application/json
+
+{
+  "Name": "Germany",
+  "Rating": 10
+}
+
+###
+
+GET {{Euro2024REST_Host_Address}}/api/Team
+Accept: application/json

@@ -1,0 +1,213 @@
+﻿@using System.Globalization
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Euro2024REST</title>
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/> *@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="css/Euro2024REST.styles.css" asp-append-version="true"/>
+</head>
+<body>
+    @if(ViewBag.returnurl == "Admin")
+    {
+    <header>
+        <nav class="main-navbar">
+            <div class="container1">
+                <style>
+                    .container1 {
+                        font-family: "Roboto Light", sans-serif;
+                    }
+                    .our-navbar {
+                        display: flex;
+                        justify-content: space-between; 
+                        align-items: center;
+                        background-color: #333; 
+                        padding: 10px; 
+                    }
+                    .navbar-nav {
+                        display: flex;
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .nav-item {
+                        margin: 0 10px; 
+                    }
+                    .nav-link, .nav-button {
+                        text-decoration: none;
+                        color: white; 
+                        background: none;
+                        border: none;
+                        font: inherit;
+                        cursor: pointer;
+                        padding: 0;
+                    }
+                    .nav-link:hover, .nav-button:hover {
+                        color: #ddd; 
+                    }
+                    .left-items {
+                        display: flex;
+                    }
+                    .right-item {
+                        margin-left: auto;
+                    }
+                </style>
+                <div class="our-navbar">
+                    <div class="left-items">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <form asp-area="" asp-controller="Home" asp-action="HomePage" method="post" class="nav-item">
+                                    <button type="submit" class="nav-button" name="session" value="Admin">Home</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-area="" asp-controller="MatchDisplay" asp-action="Index" method="post" class="nav-item">
+                                    <button type="submit" class="nav-button" name="session" value="Admin">Matches</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-area="" asp-controller="TeamsDisplay" asp-action="Index" method="post" class="nav-item">
+                                    <button type="submit" class="nav-button" name="session" value="Admin">Teams</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-area="" asp-controller="Predictions" asp-action="Index" method="post" class="nav-item">
+                                    <button type="submit" class="nav-button" name="session" value="Admin">Predictions</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-area="" asp-controller="Home" asp-action="Privacy" method="post" class="nav-item">
+                                    <button type="submit" class="nav-button" name="session" value="Admin">Privacy</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="right-item">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <form asp-area="" asp-controller="AdminPanel" asp-action="Index" method="post" class="nav-item">
+                                    <button type="submit" class="nav-button" name="session" value="Admin">Admin Panel</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-area="" asp-controller="Home" asp-action="Logout" method="post" class="nav-item">
+                                    <button type="submit" class="nav-button">Log out</button>
+                                </form>
+                                @* <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Logout">Log out</a> *@
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header> 
+    }
+    else if(ViewBag.returnurl == "User")
+    {
+        {
+            <header>
+                <nav class="main-navbar2">
+                    <div class="container2">
+                        <style>
+                            .container2 {
+                                font-family: "Roboto Light", sans-serif;
+                            }
+                            .our-navbar2 {
+                                display: flex;
+                                justify-content: space-between; 
+                                align-items: center; 
+                                background-color: #333; 
+                                padding: 10px; 
+                            }
+                            .navbar-nav2 {
+                                display: flex;
+                                list-style: none; 
+                                margin: 0;
+                                padding: 0;
+                            }
+                            .nav-item {
+                                margin: 0 10px;
+                            }
+                            .nav-link, .nav-button {
+                                text-decoration: none; 
+                                color: white; 
+                                background: none;
+                                border: none;
+                                font: inherit;
+                                cursor: pointer;
+                                padding: 0;
+                            }
+                            .nav-link:hover, .nav-button:hover {
+                                color: #ddd; 
+                            }
+                            .left-items {
+                                display: flex;
+                            }
+                            .right-item {
+                                margin-left: auto;
+                            }
+                        </style>
+                        <div class="our-navbar2">
+                            <div class="left-items">
+                                <ul class="navbar-nav2">
+                                    <li class="nav-item">
+                                        <form asp-area="" asp-controller="Home" asp-action="HomePage" method="post" class="nav-item">
+                                            <button type="submit" class="nav-button" name="session" value="User">Home</button>
+                                        </form>
+                                    </li>
+                                    <li class="nav-item">
+                                        <form asp-area="" asp-controller="MatchDisplay" asp-action="Index" method="post" class="nav-item">
+                                            <button type="submit" class="nav-button" name="session" value="User">Matches</button>
+                                        </form>
+                                    </li>
+                                    <li class="nav-item">
+                                        <form asp-area="" asp-controller="TeamsDisplay" asp-action="Index" method="post" class="nav-item">
+                                            <button type="submit" class="nav-button" name="session" value="User">Teams</button>
+                                        </form>
+                                    </li>
+                                    <li class="nav-item">
+                                        <form asp-area="" asp-controller="Predictions" asp-action="Index" method="post" class="nav-item">
+                                            <button type="submit" class="nav-button" name="session" value="User">Predictions</button>
+                                        </form>
+                                    </li>
+                                    <li class="nav-item">
+                                        <form asp-area="" asp-controller="Home" asp-action="Privacy" method="post" class="nav-item">
+                                            <button type="submit" class="nav-button" name="session" value="User">Privacy</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="right-item">
+                                <ul class="navbar-nav2">
+                                    <li class="nav-item">
+                                        <form asp-area="" asp-controller="Home" asp-action="Logout" method="post" class="nav-item">
+                                            <button type="submit" class="nav-button">Log out</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </header>    
+        }
+    }
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Euro2024REST - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

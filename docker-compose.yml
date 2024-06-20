@@ -1,0 +1,15 @@
+version: '4.3'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: euro2024rest-postgresql
+    environment:
+      POSTGRES_USER: euro2024restuser
+      POSTGRES_PASSWORD: euro2024restpass
+      POSTGRES_DB: euro2024restdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+volumes:
+  postgres-data:

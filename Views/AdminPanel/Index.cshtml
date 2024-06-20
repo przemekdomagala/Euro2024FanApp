@@ -1,0 +1,354 @@
+﻿@{
+    ViewData["Title"] = "Admin Panel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.returnurl == "Admin")
+{
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome to Admin Panel</h1>
+        <p>Learn about Napisz tam cokolwiek</p>
+        @using (Html.BeginForm("Tables", "AdminPanel", FormMethod.Post))
+        {
+            <input type="submit" class="pure-button pure-button-primary" name="toggle" value="View Users"/>
+            <input type="submit" class="pure-button pure-button-primary" name="toggle" value="View Matches"/>
+            <input type="submit" class="pure-button pure-button-primary" name="toggle" value="View Teams"/>
+            <input type="submit" class="pure-button pure-button-primary" name="toggle" value="View Players"/>
+        }
+        @if (ViewData["Users"] != null)
+        {
+            var users = ViewData["Users"] as List<User>;
+            <table>
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Type</th>
+                    <th></th>
+                    <th>
+                        @using (Html.BeginForm("ChooseAdd", "AdminPanel", FormMethod.Post))
+                        {
+                            <input type="submit" name="arg" value="AddUser" class="pure-button pure-button-danger"/>
+                        }
+                    </th>
+
+                </tr>
+                @foreach (var user in users)
+                {
+                    <tr>
+                        <td>@user.Username</td>
+                        <td>@user.Password</td>
+                        <td>@user.Type</td>
+                        <td>
+                            @if (@user.Type != UserType.Admin)
+                            {
+                                @using (Html.BeginForm("DeleteUser", "AdminPanel", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="userId" value="@user.Username"/>
+                                    <input type="submit" value="Delete" class="pure-button pure-button-danger"/>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @if (@user.Type != UserType.Admin)
+                            {
+                                @using (Html.BeginForm("ChooseModify", "AdminPanel", FormMethod.Post))
+                                {
+                                    <input type="submit" name="arg" value="ModifyUser @user.Username" class="pure-button pure-button-danger"/>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        @if (ViewData["Matches"] != null)
+        {
+            var matches = ViewData["Matches"] as List<Match>;
+            <table>
+                <tr>
+                    <th>Team1</th>
+                    <th>Score</th>
+                    <th>Team2</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                    <th></th>
+                    <th>
+                        @using (Html.BeginForm("ChooseAdd", "AdminPanel", FormMethod.Post))
+                        {
+                            <input type="submit" name="arg" value="AddMatch" class="pure-button pure-button-danger"/>
+                        }
+                    </th>
+                </tr>
+                @foreach (var match in matches)
+                {
+                    <tr>
+                        <td>@match.Team1</td>
+                        <td>@match.Score1 - @match.Score2</td>
+                        <td>@match.Team2</td>
+                        <td>@match.Date</td>
+                        <td>@match.Venue</td>
+                        <td>
+                            @using (Html.BeginForm("DeleteMatch", "AdminPanel", FormMethod.Post))
+                            {
+                                <input type="hidden" name="matchId" value="@match.Id"/>
+                                <input type="submit" value="Delete" class="pure-button pure-button-danger"/>
+                            }
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("ChooseModify", "AdminPanel", FormMethod.Post)) {
+                                <input type="submit" name="arg" value="ModifyMatch @match.Id" class="pure-button pure-button-danger"/>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        @if (ViewData["Teams"] != null)
+        {
+            var teams = ViewData["Teams"] as List<Team>;
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Rating</th>
+                    <th></th>
+                    <th>
+                        @using (Html.BeginForm("ChooseAdd", "AdminPanel", FormMethod.Post))
+                        {
+                            <input type="submit" name="arg" value="AddTeam" class="pure-button pure-button-danger"/>
+                        }
+                    </th>
+                </tr>
+                @foreach (var team in teams)
+                {
+                    <tr>
+                        <td>@team.Name</td>
+                        <td>@team.Rating</td>
+                        <td>
+                            @using (Html.BeginForm("DeleteTeam", "AdminPanel", FormMethod.Post))
+                            {
+                                <input type="hidden" name="teamId" value="@team.Name"/>
+                                <input type="submit" value="Delete" class="pure-button pure-button-danger"/>
+                            }
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("ChooseModify", "AdminPanel", FormMethod.Post))
+                            {
+                                <input type="submit" name="arg" value="ModifyTeam @team.Name" class="pure-button pure-button-danger"/>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        @if (ViewData["Players"] != null)
+        {
+            var players = ViewData["Players"] as List<Player>;
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Height</th>
+                    <th>MarketValue</th>
+                    <th>Team</th>
+                    <th>Position</th>
+                    <th>Club</th>
+                    <th></th>
+                    <th>
+                        @using (Html.BeginForm("ChooseAdd", "AdminPanel", FormMethod.Post))
+                        {
+                            <input type="submit" name="arg" value="AddPlayer" class="pure-button pure-button-danger"/>
+                        }
+                    </th>
+                </tr>
+                @foreach (var player in players)
+                {
+                    <tr>
+                        <td>@player.Name</td>
+                        <td>@player.Age</td>
+                        <td>@player.Height cm</td>
+                        <td>@player.MarketValue €</td>
+                        <td>@player.Team</td>
+                        <td>@player.Position</td>
+                        <td>@player.Club</td>
+                        <td>
+                            @using (Html.BeginForm("DeletePlayer", "AdminPanel", FormMethod.Post))
+                            {
+                                <input type="hidden" name="playerId" value="@player.Name"/>
+                                <input type="submit" value="Delete" class="pure-button pure-button-danger"/>
+                            }
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("ChooseModify", "AdminPanel", FormMethod.Post))
+                            {
+                                <input type="submit" name="arg" value="ModifyPlayer @player.Name" class="pure-button pure-button-danger"/>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+    <div>
+        @if (ViewData["Success"] != null)
+        {
+            <p>Successfully @ViewData["Success"]</p>
+        }
+        @if (ViewData["Error"] != null)
+        {
+            <div class="red">
+                <p><strong>Invalid Input</strong></p>
+            </div>
+        }
+        @using (Html.BeginForm("AddUser", "AdminPanel", FormMethod.Post))
+        {
+            @if (ViewData["addUser"] != null)
+            {
+                <input type="text" placeholder="Username" id="username" name="username"/>
+                <br/>
+                <input type="text" placeholder="Password" id="password" name="password"/>
+                <br/>
+                <input type="text" placeholder="Type" id="type" name="type"/>
+                <br/>
+                <input type="submit" class="pure-button pure-button-primary" name="action" value="Add"/>
+            }
+        }
+        @using (Html.BeginForm("ModifyUser", "AdminPanel", FormMethod.Post))
+        {
+            @if (ViewData["modifyUser"] != null)
+            {
+                var user = ViewData["modifyUser"] as User;
+                <input type="text" value="@user?.Username" id="username" name="username"/>
+                <br/>
+                <input type="text" placeholder="password" id="password" name="password"/>
+                <br/>
+                <input type="text" value="@user?.Type" id="type" name="type"/>
+                <br/>
+                <input type="hidden" id="additionalParam" name="additionalParam" value="@user?.Username"/>
+                <input type="submit" class="pure-button pure-button-primary" name="action" value="Modify"/> 
+            }
+        }
+
+        @using (Html.BeginForm("AddMatch", "AdminPanel", FormMethod.Post))
+        {
+            @if (ViewData["addMatch"] != null)
+            {
+                <input type="text" placeholder="Team1" id="team1" name="team1"/>
+                <br/>
+                <input type="text" placeholder="Score1" id="score1" name="score1"/>
+                <br/>
+                <input type="text" placeholder="Score2" id="score2" name="score2"/>
+                <br/>
+                <input type="text" placeholder="Team2" id="team2" name="team2"/>
+                <br/>
+                <input type="datetime-local" placeholder="Date" id="date" name="date"/>
+                <br/>
+                <input type="text" placeholder="Venue" id="venue" name="venue"/>
+                <br/>
+                <input type="text" placeholder="Phase" id="phase" name="phase"/>
+                <br/>
+                <input type="submit" class="pure-button pure-button-primary" name="action" value="Add"/>
+            }
+        }
+
+        @using (Html.BeginForm("ModifyMatch", "AdminPanel", FormMethod.Post))
+        {
+            @if (ViewData["modifyMatch"] != null)
+            {
+                var match = ViewData["modifyMatch"] as Match;
+                <input type="text" value="@match?.Team1" id="team1" name="team1"/>
+                <br/>
+                <input type="text" value="@match?.Score1" id="score1" name="score1"/>
+                <br/>
+                <input type="text" value="@match?.Score2" id="score2" name="score2"/>
+                <br/>
+                <input type="text" value="@match?.Team2" id="team2" name="team2"/>
+                <br/>
+                <input type="datetime-local" value="@match?.Date" id="date" name="date"/>
+                <br/>
+                <input type="text" value="@match?.Venue" id="venue" name="venue"/>
+                <br/>
+                <input type="text" value="@match?.Phase" id="phase" name="phase"/>
+                <br/>
+                <input type="hidden" id="additionalParam" name="additionalParam" value="@match?.Id"/>
+                <input type="submit" class="pure-button pure-button-primary" name="action" value="Modify"/>
+            }
+        }
+        
+        @using (Html.BeginForm("AddTeam", "AdminPanel", FormMethod.Post))
+        {
+            @if (ViewData["addTeam"] != null)
+            {
+                <input type="text" placeholder="Name" id="name" name="name"/>
+                <br/>
+                <input type="number" placeholder="Rating" id="rating" name="rating"/>
+                <br/>
+                <input type="submit" class="pure-button pure-button-primary" name="action" value="Add"/>
+            }
+        }
+        @using (Html.BeginForm("ModifyTeam", controllerName: "AdminPanel", FormMethod.Post))
+        {
+            @if (ViewData["modifyTeam"] != null)
+            {
+                var team = ViewData["modifyTeam"] as Team;
+                <input type="text" value="@team?.Name" id="name" name="name"/>
+                <br/>
+                <input type="number" value="@team?.Rating" id="rating" name="rating"/>
+                <br/>
+                <input type="hidden" id="additionalParam" name="additionalParam" value="@team.Name"/>
+                <input type="submit" class="pure-button pure-button-primary" name="action" value="Modify"/>
+            }
+        }
+        @using (Html.BeginForm("AddPlayer", "AdminPanel", FormMethod.Post))
+        {
+            @if (ViewData["addPlayer"] != null)
+            {
+                <input type="text" placeholder="Name" id="name" name="name"/>
+                <br/>
+                <input type="number" placeholder="Age" id="age" name="age"/>
+                <br/>
+                <input type="number" placeholder="Height" id="height" name="height"/>
+                <br/>
+                <input type="number" placeholder="MarketValue" id="marketValue" name="marketValue"/>
+                <br/>
+                <input type="text" placeholder="Team" id="team" name="team"/>
+                <br/>
+                <input type="text" placeholder="Position" id="position" name="position"/>
+                <br/>
+                <input type="text" placeholder="Club" id="club" name="club"/>
+                <br/>
+                <input type="submit" class="pure-button pure-button-primary" name="action" value="Add"/>
+            }
+        }
+        @using (Html.BeginForm("ModifyPlayer", "AdminPanel", FormMethod.Post))
+        {
+            @if (ViewData["modifyPlayer"] != null)
+            {
+                var player = ViewData["modifyPlayer"] as Player;
+                <input type="text" value="@player?.Name" id="name" name="name"/>
+                <br/>
+                <input type="number" value="@player?.Age" id="age" name="age"/>
+                <br/>
+                <input type="number" value="@player?.Height" id="height" name="height"/>
+                <br/>
+                <input type="number" value="@player?.MarketValue" id="marketValue" name="marketValue"/>
+                <br/>
+                <input type="text" value="@player?.Team" id="team" name="team"/>
+                <br/>
+                <input type="text" value="@player?.Position" id="position" name="position"/>
+                <br/>
+                <input type="text" value="@player?.Club" id="club" name="club"/>
+                <br/>
+                <input type="hidden" id="additionalParam" name="additionalParam" value="@player?.Name"/>
+                <input type="submit" class="pure-button pure-button-primary" name="action" value="Modify"/>
+            }
+        }
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome to User Panel</h1>
+        <p>Learn about Napisz tam cokolwiek</p>
+    </div>
+}
