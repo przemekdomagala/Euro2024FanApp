@@ -11,8 +11,6 @@ Welcome to the EURO 2024 web application! This application allows users to check
 
 ## Installation
 
-To run this application locally, follow these steps:
-
 1. **Clone the Repository**
 
    ```bash
