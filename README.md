@@ -1,6 +1,6 @@
-# EURO 2024 Web Application
+# EURO 2024 Fan Application
 
-Welcome to the EURO 2024 web application! This application allows users to check the match schedule, view information about teams and players, and predict match results for the EURO 2024 tournament.
+Welcome to the EURO 2024 fan application! This application allows users to check the match schedule, view information about teams and players, and predict match results for the EURO 2024 tournament.
 
 ## Features
 
