@@ -12,3 +12,4 @@ Welcome to the EURO 2024 fan application! This application allows users to check
 ## Installation
 
 1. **Views of application**
+   * ![alt text](https://github.com/przemekdomagala/Euro2024FanApp/blob/main/screenshot.png)
