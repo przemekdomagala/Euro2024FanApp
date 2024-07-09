@@ -4,14 +4,11 @@ Welcome to the EURO 2024 fan application! This application allows users to check
 
 ## Features
 
-- **Match Schedule**: View the complete schedule of matches, including dates, times, and venues.
+- **Match Schedule**: View the complete schedule of matches, including dates and venues.
 - **Team Information**: Access detailed information about all participating teams.
 - **Player Information**: Get insights into players, including their statistics and profiles.
-- **Results Prediction**: Predict the outcomes of matches and see how your predictions compare to actual results.
+- **Results Prediction**: Predict the outcomes of group stage.
 
 ## Installation
 
-1. **Clone the Repository**
-
-   ```bash
-   git clone https://github.com/przemekdomagala/Euro2024FanApp.git
+1. **Views of application**
