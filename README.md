@@ -5,7 +5,7 @@ Welcome to the EURO 2024 fan application! This application allows users to check
 ## Implementation
 
 - Application is implemented in MVC architecture with .NET.
-- DataBase is local with PostgreSQL image on docker.
+- DataBase is local with PostgreSQL container on docker.
 
 ## Features
 
