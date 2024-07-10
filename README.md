@@ -14,7 +14,7 @@ Welcome to the EURO 2024 fan application! This application allows users to check
 - **Player Information**: Get insights into players, including their statistics and profiles.
 - **Results Prediction**: Predict the outcomes of group stage.
 
-## Installation
+## View
 
 1. **Views of application**
 ![alt text](https://github.com/przemekdomagala/Euro2024FanApp/blob/main/screenshot.png)
